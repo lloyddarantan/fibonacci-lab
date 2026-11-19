@@ -8,41 +8,37 @@ export default function SequenceDisplay({
   selectedNumber,
 }: SequenceDisplayProps) {
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-      <h2 className="text-xl font-bold">
-        Fibonacci Sequence
+    <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-8">
+      <h2 className="font-display text-2xl font-bold text-teal-950">
+        The sequence up to F({selectedNumber})
       </h2>
-
       <p className="mt-1 text-sm text-slate-500">
-        All calculated values from F(0) to F({selectedNumber}).
+        Each value is the sum of the two before it.
       </p>
 
-      <div className="mt-5 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
-        {sequence.map((value, index) => (
-          <div
-            key={index}
-            className={`rounded-xl border p-3 ${
-              index === selectedNumber
-                ? "border-blue-500 bg-blue-50"
-                : "border-slate-200 bg-slate-50"
-            }`}
-          >
-            <p className="text-xs font-medium text-slate-500">
-              F({index})
-            </p>
-
-            <p className="mt-1 break-all text-lg font-bold text-slate-800">
-              {value.toString()}
-            </p>
-
-            {index === selectedNumber && (
-              <span className="mt-2 inline-block rounded-md bg-blue-600 px-2 py-1 text-xs text-white">
-                Selected
-              </span>
-            )}
-          </div>
-        ))}
-      </div>
+      <ol className="mt-6 grid grid-cols-2 gap-2.5 sm:grid-cols-3 lg:grid-cols-4">
+        {sequence.map((value, index) => {
+          const selected = index === selectedNumber;
+          return (
+            <li
+              key={index}
+              aria-current={selected ? "true" : undefined}
+              className={`rounded-2xl p-3.5 ${
+                selected
+                  ? "bg-teal-950 text-white"
+                  : "bg-slate-50 text-slate-800"
+              }`}
+            >
+              <p className={`text-xs font-medium ${selected ? "text-amber-300" : "text-slate-500"}`}>
+                F({index}){selected && " · your result"}
+              </p>
+              <p className="font-display mt-1 break-all text-xl font-bold tabular-nums">
+                {value.toString()}
+              </p>
+            </li>
+          );
+        })}
+      </ol>
     </div>
   );
 }
